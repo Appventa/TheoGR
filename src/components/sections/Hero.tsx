@@ -1,11 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../../context/LanguageContext';
 
-
-const FULL_TEXT =
-  '25 years crafting video, design, and brand strategy. From concept to execution, I deliver solutions that make your brand stand out.';
-
-const TYPING_SPEED  = 80;   // ms per character — slow, deliberate
+const TYPING_SPEED  = 80;   // ms per character
 const HOLD_DURATION = 5000; // ms to show full text before fading
 const FADE_DURATION = 1000; // ms for opacity fade out
 const WAIT_DURATION = 2000; // ms blank pause before restarting
@@ -13,10 +10,25 @@ const WAIT_DURATION = 2000; // ms blank pause before restarting
 type Phase = 'waiting' | 'typing' | 'holding' | 'fading';
 
 export function Hero() {
+  const { t } = useLanguage();
+  const fullText = t.hero.typewriter;
+
   const [displayedText, setDisplayedText] = useState('');
-  const [phase, setPhase]   = useState<Phase>('waiting');
+  const [phase, setPhase]     = useState<Phase>('waiting');
   const [visible, setVisible] = useState(false);
-  const indexRef = useRef(0);
+  const indexRef  = useRef(0);
+  // Reset when language changes so the new text types from the start
+  const prevText  = useRef(fullText);
+
+  useEffect(() => {
+    if (prevText.current !== fullText) {
+      prevText.current = fullText;
+      setDisplayedText('');
+      setVisible(false);
+      indexRef.current = 0;
+      setPhase('waiting');
+    }
+  }, [fullText]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -35,8 +47,8 @@ export function Hero() {
       case 'typing':
         ticker = setInterval(() => {
           indexRef.current += 1;
-          setDisplayedText(FULL_TEXT.slice(0, indexRef.current));
-          if (indexRef.current >= FULL_TEXT.length) {
+          setDisplayedText(fullText.slice(0, indexRef.current));
+          if (indexRef.current >= fullText.length) {
             clearInterval(ticker);
             setPhase('holding');
           }
@@ -49,7 +61,6 @@ export function Hero() {
 
       case 'fading':
         setVisible(false);
-        // wait for fade-out to finish, then reset
         timer = setTimeout(() => {
           setDisplayedText('');
           setPhase('waiting');
@@ -58,7 +69,7 @@ export function Hero() {
     }
 
     return () => { clearTimeout(timer); clearInterval(ticker); };
-  }, [phase]);
+  }, [phase, fullText]);
 
   return (
     <section className="relative h-dvh min-h-[600px] overflow-hidden">
@@ -74,11 +85,11 @@ export function Hero() {
         <source src="/Hero_BG_video_LOOP.mp4" type="video/mp4" />
       </video>
 
-      {/* Subtle dark vignette — just enough to read text */}
+      {/* Subtle dark vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
 
-      {/* Typewriter text — vertically centred, left-anchored */}
-      <div className="absolute inset-0 flex items-center px-8 md:px-20">
+      {/* Typewriter text — centred on screen, left-aligned within its block */}
+      <div className="absolute inset-0 flex items-center justify-center px-6">
         <AnimatePresence>
           {visible && (
             <motion.p
@@ -87,7 +98,7 @@ export function Hero() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: FADE_DURATION / 1000, ease: 'easeInOut' }}
-              className="text-left text-white max-w-3xl leading-snug"
+              className="text-left text-white w-full max-w-3xl leading-snug"
               style={{ fontFamily: "'Inter', sans-serif", fontSize: '2.25rem', fontWeight: 300 }}
             >
               {displayedText}
