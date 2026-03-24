@@ -78,8 +78,8 @@ export function Hero() {
       {/* Subtle dark vignette — just enough to read text */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
 
-      {/* Typewriter text — centred lower-third */}
-      <div className="absolute inset-0 flex items-end justify-center pb-28 px-6">
+      {/* Typewriter text — dead centre */}
+      <div className="absolute inset-0 flex items-center justify-center px-6">
         <AnimatePresence>
           {visible && (
             <motion.p
