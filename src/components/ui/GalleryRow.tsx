@@ -27,7 +27,7 @@ export function GalleryRow({ category }: GalleryRowProps) {
         className="flex gap-4 overflow-x-scroll no-scrollbar cursor-grab px-6 md:px-16 pb-2 select-none"
       >
         {category.items.map(item => (
-          <VideoCard key={item.id} item={item} />
+          <VideoCard key={item.id} item={item} portrait={category.portrait} />
         ))}
       </div>
     </div>

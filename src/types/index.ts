@@ -8,9 +8,10 @@ export interface VideoItem {
 }
 
 export interface GalleryCategory {
-  id:    string;
-  label: string;
-  items: VideoItem[];
+  id:      string;
+  label:   string;
+  items:   VideoItem[];
+  portrait?: boolean;
 }
 
 export interface ClientLogo {

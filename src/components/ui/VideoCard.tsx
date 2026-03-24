@@ -4,16 +4,17 @@ import { PlayIcon } from './PlayIcon';
 import type { VideoItem } from '../../types';
 
 interface VideoCardProps {
-  item: VideoItem;
+  item:      VideoItem;
+  portrait?: boolean;
 }
 
-export function VideoCard({ item }: VideoCardProps) {
+export function VideoCard({ item, portrait }: VideoCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <motion.div
-        className="relative flex-shrink-0 w-[320px] h-[200px] rounded-md overflow-hidden bg-surface-highest cursor-pointer"
+        className={`relative flex-shrink-0 rounded-md overflow-hidden bg-surface-highest cursor-pointer ${portrait ? 'w-[180px] h-[320px]' : 'w-[320px] h-[200px]'}`}
         whileHover={{ scale: 1.04 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
         onClick={() => item.videoUrl && setOpen(true)}

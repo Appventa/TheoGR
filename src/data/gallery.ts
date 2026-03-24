@@ -26,8 +26,9 @@ export const galleryData: GalleryCategory[] = [
     ],
   },
   {
-    id:    'ugc-social',
-    label: 'UGC & Social',
+    id:       'ugc-social',
+    label:    'UGC & Social',
+    portrait: true,
     items: [
       { id: 'ug-01', title: '', thumbnail: '/thumbs/UGC_1.jpg', videoUrl: '/videos/UGC_1.mp4' },
       { id: 'ug-02', title: '', thumbnail: '/thumbs/UGC_2.jpg', videoUrl: '/videos/UGC_2.mp4' },
