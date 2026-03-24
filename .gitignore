@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+.env.local
+.DS_Store
+*.log
+
+# Video assets — host via CDN or Vercel Blob (too large for git)
+# Once compressed to <50MB, move to the lfs-tracked section below
+public/*.mp4
+public/*.webm
+
+# Skills directory (Claude Code dev tools, not part of the project)
+skills/
