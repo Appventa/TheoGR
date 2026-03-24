@@ -16,14 +16,15 @@ Updated at each successful milestone.
 
 ## Milestones
 
-### ✅ [2026-03-24] — Initial Scaffold & First Build
+### ✅ [2026-03-24] — Initial Scaffold, Build & GitHub Push
 - Vite + React 18 + TypeScript project scaffolded manually (no CLI template)
 - Tailwind CSS v3 configured with full design tokens from DESIGN.md
 - `public/` folder renamed from `puplic/` typo — hero video at `public/Hero_BG_video_LOOP.mp4`
 - All source files created: types, data, i18n, context, motion lib, all components
 - TypeScript: zero errors (`npm run typecheck`)
-- Production build: passes ✅ (`npm run build` — 913ms, zero warnings)
-- First commit pushed to `https://github.com/Appventa/TheoGR`
+- Production build: passes ✅ (`npm run build` — 913ms, 0 warnings)
+- Hero video compressed 172MB → 40MB by user, tracked via Git LFS in `.gitattributes`
+- Codebase + video pushed to `https://github.com/Appventa/TheoGR` ✅
 
 ---
 
