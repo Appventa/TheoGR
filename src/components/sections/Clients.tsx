@@ -8,7 +8,7 @@ export function Clients() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-surface-low overflow-hidden pause-on-hover">
+    <section className="py-20 bg-white overflow-hidden pause-on-hover">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -16,7 +16,7 @@ export function Clients() {
       >
         <motion.p
           variants={fadeScaleIn}
-          className="font-body text-label-sm text-on-surface-variant uppercase tracking-widest text-center mb-12"
+          className="font-body text-label-sm text-surface uppercase tracking-widest text-center mb-12"
         >
           {t.clients.label}
         </motion.p>
