@@ -30,7 +30,7 @@ export const translations = {
       button:  'Επικοινωνία',
     },
     clients: {
-      label: 'Συνεργάστηκα με',
+      label: 'Εμπιστεύονται κορυφαίες εταιρείες',
     },
     footer: {
       copyright: '© {year} Θέος Κοκκινίδης. Όλα τα δικαιώματα κατοχυρωμένα.',
@@ -68,7 +68,7 @@ export const translations = {
       button:  'Get in Touch',
     },
     clients: {
-      label: 'Trusted By',
+      label: 'Trusted by Leading Brands',
     },
     footer: {
       copyright: '© {year} Theo Kokkinidis. All rights reserved.',

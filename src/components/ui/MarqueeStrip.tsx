@@ -1,37 +1,36 @@
 import type { ClientLogo } from '../../types';
 
 interface MarqueeStripProps {
-  logos:   ClientLogo[];
-  speed?:  number;
+  logos:  ClientLogo[];
+  speed?: number;
 }
 
-export function MarqueeStrip({ logos, speed = 35 }: MarqueeStripProps) {
+export function MarqueeStrip({ logos, speed = 40 }: MarqueeStripProps) {
   const doubled = [...logos, ...logos];
 
   return (
     <div className="flex overflow-hidden">
       <div
-        className="flex gap-16 animate-marquee whitespace-nowrap items-center"
+        className="flex gap-20 animate-marquee whitespace-nowrap items-center"
         style={{ animationDuration: `${speed}s` }}
       >
         {doubled.map((logo, i) => (
           <div
             key={`${logo.id}-${i}`}
-            className="flex-shrink-0 h-8 flex items-center"
+            className="flex-shrink-0 h-14 flex items-center"
           >
             <img
               src={logo.src}
               alt={logo.name}
               draggable={false}
-              className="h-full w-auto object-contain opacity-40 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0"
+              className="h-full w-auto object-contain grayscale brightness-0"
               onError={(e) => {
-                // Fallback: render brand name as text if logo file missing
                 const target = e.currentTarget;
                 const parent = target.parentElement;
                 if (parent) {
                   target.style.display = 'none';
                   const text = document.createElement('span');
-                  text.className = 'font-display font-bold text-label-md text-on-surface-variant uppercase tracking-widest';
+                  text.style.cssText = 'font-family: Inter, sans-serif; font-weight: 700; font-size: 1rem; color: #131313; text-transform: uppercase; letter-spacing: 0.05em;';
                   text.textContent = logo.name;
                   parent.appendChild(text);
                 }

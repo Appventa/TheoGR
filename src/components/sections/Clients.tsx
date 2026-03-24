@@ -8,18 +8,19 @@ export function Clients() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-white overflow-hidden pause-on-hover">
+    <section className="py-16 bg-white overflow-hidden pause-on-hover">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <motion.p
+        {/* Heading — bold, dark, centred, matching reference */}
+        <motion.h3
           variants={fadeScaleIn}
-          className="font-body text-label-sm text-surface uppercase tracking-widest text-center mb-12"
+          className="text-center font-display font-bold text-display-sm text-surface mb-12"
         >
           {t.clients.label}
-        </motion.p>
+        </motion.h3>
 
         <MarqueeStrip logos={clientLogos} />
       </motion.div>
