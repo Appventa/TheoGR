@@ -7,9 +7,27 @@ export function CtaSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="cta" className="py-24 bg-background overflow-hidden">
+    <section id="cta" className="relative overflow-hidden">
+      {/* Background photo */}
+      <img
+        src="/Theo_post.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-background/75" />
+
+      {/* Top fade from Gallery section */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-surface-low to-transparent" />
+
+      {/* Bottom fade into Clients section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-low to-transparent" />
+
+      {/* Content */}
       <motion.div
-        className="max-w-3xl mx-auto px-6 text-center flex flex-col items-center gap-6"
+        className="relative z-10 py-32 max-w-3xl mx-auto px-6 text-center flex flex-col items-center gap-6"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"

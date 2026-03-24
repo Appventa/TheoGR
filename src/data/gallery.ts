@@ -14,18 +14,6 @@ export const galleryData: GalleryCategory[] = [
     ],
   },
   {
-    id:    'music-videos',
-    label: 'Music Videos',
-    items: [
-      { id: 'mv-01', title: 'Neon Dreamscape',       thumbnail: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=640&q=80' },
-      { id: 'mv-02', title: 'Midnight Sessions',     thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=640&q=80' },
-      { id: 'mv-03', title: 'Collab Project',        thumbnail: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=640&q=80' },
-      { id: 'mv-04', title: 'Performance Cut',       thumbnail: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=640&q=80' },
-      { id: 'mv-05', title: 'Cinematic Narrative',   thumbnail: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=640&q=80' },
-      { id: 'mv-06', title: 'Urban Rhythm',          thumbnail: 'https://images.unsplash.com/photo-1598387846148-47e82ee120cc?w=640&q=80' },
-    ],
-  },
-  {
     id:    'product-videos',
     label: 'Product Videos',
     items: [
