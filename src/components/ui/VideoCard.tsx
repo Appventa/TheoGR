@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PlayIcon } from './PlayIcon';
 import type { VideoItem } from '../../types';
 
@@ -7,33 +8,79 @@ interface VideoCardProps {
 }
 
 export function VideoCard({ item }: VideoCardProps) {
-  return (
-    <motion.div
-      className="relative flex-shrink-0 w-[320px] h-[200px] rounded-md overflow-hidden bg-surface-highest cursor-pointer"
-      whileHover={{ scale: 1.04 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-    >
-      <img
-        src={item.thumbnail}
-        alt={item.title}
-        draggable={false}
-        className="w-full h-full object-cover"
-      />
+  const [open, setOpen] = useState(false);
 
+  return (
+    <>
       <motion.div
-        className="absolute inset-0 bg-background/75 flex flex-col items-center justify-center gap-3 px-4"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
+        className="relative flex-shrink-0 w-[320px] h-[200px] rounded-md overflow-hidden bg-surface-highest cursor-pointer"
+        whileHover={{ scale: 1.04 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+        onClick={() => item.videoUrl && setOpen(true)}
       >
-        <PlayIcon size={44} />
-        <p className="font-body text-body-md text-on-surface text-center leading-snug">
-          {item.title}
-        </p>
-        {item.duration && (
-          <span className="font-body text-label-sm text-primary">{item.duration}</span>
-        )}
+        <img
+          src={item.thumbnail}
+          alt={item.title}
+          draggable={false}
+          className="w-full h-full object-cover"
+        />
+
+        <motion.div
+          className="absolute inset-0 bg-background/75 flex flex-col items-center justify-center gap-3 px-4"
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <PlayIcon size={44} />
+          {item.title && (
+            <p className="font-body text-body-md text-on-surface text-center leading-snug">
+              {item.title}
+            </p>
+          )}
+        </motion.div>
       </motion.div>
-    </motion.div>
+
+      {/* Video lightbox */}
+      <AnimatePresence>
+        {open && item.videoUrl && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-50 bg-background/90 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="relative w-full max-w-4xl" onClick={e => e.stopPropagation()}>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="absolute -top-10 right-0 text-on-surface-variant hover:text-on-surface transition-colors"
+                  aria-label="Close"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+                <video
+                  src={item.videoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full rounded-md bg-black"
+                  style={{ maxHeight: '80dvh' }}
+                />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
