@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+
 const FULL_TEXT =
   '25 years crafting video, design, and brand strategy. From concept to execution, I deliver solutions that make your brand stand out.';
 
-const TYPING_SPEED  = 38;   // ms per character
-const HOLD_DURATION = 4500; // ms to show full text before fading
-const FADE_DURATION = 800;  // ms for opacity fade out
-const WAIT_DURATION = 2200; // ms blank pause before restarting
+const TYPING_SPEED  = 80;   // ms per character — slow, deliberate
+const HOLD_DURATION = 5000; // ms to show full text before fading
+const FADE_DURATION = 1000; // ms for opacity fade out
+const WAIT_DURATION = 2000; // ms blank pause before restarting
 
 type Phase = 'waiting' | 'typing' | 'holding' | 'fading';
 
@@ -59,8 +60,6 @@ export function Hero() {
     return () => { clearTimeout(timer); clearInterval(ticker); };
   }, [phase]);
 
-  const showCursor = phase === 'typing';
-
   return (
     <section className="relative h-dvh min-h-[600px] overflow-hidden">
       {/* Background Video */}
@@ -88,12 +87,9 @@ export function Hero() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: FADE_DURATION / 1000, ease: 'easeInOut' }}
-              className="font-display text-display-sm text-on-surface text-center max-w-2xl leading-snug"
+              className="font-display text-display-md text-on-surface text-center max-w-3xl leading-snug"
             >
               {displayedText}
-              {showCursor && (
-                <span className="inline-block w-0.5 h-[1em] bg-primary ml-1 align-middle animate-pulse" />
-              )}
             </motion.p>
           )}
         </AnimatePresence>
