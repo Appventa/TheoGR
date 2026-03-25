@@ -51,7 +51,7 @@ export const translations = {
         'UGC & Social Media',
         'Δημιουργικό / 3D',
         'Στρατηγική Brand',
-        'Webpage / Web App',
+        'Ιστοσελίδα / Web App',
       ],
     },
     clients: {
