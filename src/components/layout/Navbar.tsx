@@ -29,9 +29,9 @@ function IconLinkedIn() {
 }
 
 const socialLinks = [
-  { href: '#', label: 'Instagram', Icon: IconInstagram },
-  { href: '#', label: 'Facebook',  Icon: IconFacebook  },
-  { href: '#', label: 'LinkedIn',  Icon: IconLinkedIn  },
+  { href: 'https://www.instagram.com/theo_director/',                    label: 'Instagram', Icon: IconInstagram },
+  { href: 'https://www.facebook.com/theo.kokkinidis',                    label: 'Facebook',  Icon: IconFacebook  },
+  { href: 'https://www.linkedin.com/in/theo-kokkinidis-26233a90',        label: 'LinkedIn',  Icon: IconLinkedIn  },
 ];
 
 export function Navbar() {
@@ -51,6 +51,8 @@ export function Navbar() {
             <a
               key={label}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={label}
               className="w-9 h-9 rounded-full bg-surface-highest flex items-center justify-center text-on-surface hover:text-primary hover:bg-surface-high transition-colors duration-200"
             >
