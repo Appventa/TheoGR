@@ -51,6 +51,7 @@ export const translations = {
         'UGC & Social Media',
         'Δημιουργικό / 3D',
         'Στρατηγική Brand',
+        'Webpage / Web App',
       ],
     },
     clients: {
@@ -113,6 +114,7 @@ export const translations = {
         'UGC & Social Media',
         'Creative / 3D',
         'Brand Strategy',
+        'Webpage / Web App',
       ],
     },
     clients: {
