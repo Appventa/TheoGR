@@ -34,8 +34,6 @@ export function Footer() {
   return (
     <footer className="py-10 bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="font-display font-bold text-display-sm text-primary">THEO</span>
-
         <p className="font-body text-body-md text-on-surface-variant text-center order-last sm:order-none">
           {copyright}
         </p>
