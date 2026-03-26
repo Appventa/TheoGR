@@ -13,19 +13,18 @@ export function Hero() {
   const { t } = useLanguage();
   const fullText = t.hero.typewriter;
 
-  // Typewriter state
   const [displayedText, setDisplayedText] = useState('');
-  const [phase, setPhase]     = useState<Phase>('waiting');
-  const [visible, setVisible] = useState(false);
-  const indexRef  = useRef(0);
-  const prevText  = useRef(fullText);
+  const [phase, setPhase]       = useState<Phase>('waiting');
+  const [visible, setVisible]   = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
-  // Scroll-scrub refs
+  const indexRef     = useRef(0);
+  const prevText     = useRef(fullText);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef     = useRef<HTMLVideoElement>(null);
-  const rafRef       = useRef<number>(0);
+  const rafRef       = useRef(0);
 
-  // Reset typewriter when language changes
+  // Reset typewriter on language change
   useEffect(() => {
     if (prevText.current !== fullText) {
       prevText.current = fullText;
@@ -50,7 +49,6 @@ export function Hero() {
           setPhase('typing');
         }, WAIT_DURATION);
         break;
-
       case 'typing':
         ticker = setInterval(() => {
           indexRef.current += 1;
@@ -61,11 +59,9 @@ export function Hero() {
           }
         }, TYPING_SPEED);
         break;
-
       case 'holding':
         timer = setTimeout(() => setPhase('fading'), HOLD_DURATION);
         break;
-
       case 'fading':
         setVisible(false);
         timer = setTimeout(() => {
@@ -84,40 +80,70 @@ export function Hero() {
     const container = containerRef.current;
     if (!video || !container) return;
 
-    // Ensure video never plays on its own
     video.pause();
 
+    // Mark ready when enough data is buffered to scrub smoothly
+    const onReady = () => setVideoReady(true);
+    if (video.readyState >= 3) {
+      setVideoReady(true);
+    } else {
+      video.addEventListener('canplaythrough', onReady, { once: true });
+    }
+
     const scrub = () => {
+      if (!video.duration) return;
       const { top, height } = container.getBoundingClientRect();
       const scrolled   = -top;
       const scrollable = height - window.innerHeight;
       const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
-
-      if (video.duration) {
-        video.currentTime = progress * video.duration;
-      }
+      video.currentTime = progress * video.duration;
     };
 
+    // Desktop: scroll event + RAF
     const onScroll = () => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(scrub);
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Mobile: continuous RAF loop during active touch for fluid scrubbing
+    // (iOS batches scroll events; this fires every frame instead)
+    let touching  = false;
+    let touchLoop = 0;
+    const runTouchLoop = () => {
+      scrub();
+      if (touching) touchLoop = requestAnimationFrame(runTouchLoop);
+    };
+    const onTouchStart = () => {
+      touching = true;
+      touchLoop = requestAnimationFrame(runTouchLoop);
+    };
+    const onTouchEnd = () => {
+      touching = false;
+      cancelAnimationFrame(touchLoop);
+    };
+
+    window.addEventListener('scroll',     onScroll,     { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend',   onTouchEnd,   { passive: true });
+    window.addEventListener('touchcancel',onTouchEnd,   { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll',     onScroll);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend',   onTouchEnd);
+      window.removeEventListener('touchcancel',onTouchEnd);
       cancelAnimationFrame(rafRef.current);
+      cancelAnimationFrame(touchLoop);
+      video.removeEventListener('canplaythrough', onReady);
     };
   }, []);
 
   return (
-    /* Tall container — 300vh gives 200vh of scroll travel for the video */
-    <div ref={containerRef} style={{ height: '300vh' }}>
+    /* 200vh = 100vh scrollable → 2× faster than before */
+    <div ref={containerRef} style={{ height: '200vh' }}>
 
-      {/* Sticky viewport — stays pinned while user scrolls through the container */}
       <div className="sticky top-0 h-dvh min-h-[600px] overflow-hidden">
 
-        {/* Scroll-scrubbed video */}
         <video
           ref={videoRef}
           src="/herovid.mp4"
@@ -126,6 +152,13 @@ export function Hero() {
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
         />
+
+        {/* Spinner shown until video is buffered */}
+        {!videoReady && (
+          <div className="absolute inset-0 flex items-center justify-center bg-background/60">
+            <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+          </div>
+        )}
 
         {/* Vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
