@@ -80,15 +80,25 @@ export function Hero() {
     const container = containerRef.current;
     if (!video || !container) return;
 
-    video.pause();
+    // iOS Safari ignores preload="auto" — calling play() on a muted+playsInline
+    // video is the only reliable way to kick off buffering. We pause immediately.
+    const kickBuffer = () => {
+      const p = video.play();
+      if (p) p.then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+    };
 
-    // Mark ready when enough data is buffered to scrub smoothly
+    // loadedmetadata fires on iOS (canplaythrough often doesn't) — use it as
+    // the readiness gate so the spinner clears and scrubbing can start.
     const onReady = () => setVideoReady(true);
-    if (video.readyState >= 3) {
+    if (video.readyState >= 1) {   // HAVE_METADATA — duration already known
       setVideoReady(true);
     } else {
-      video.addEventListener('canplaythrough', onReady, { once: true });
+      video.addEventListener('loadedmetadata', onReady, { once: true });
     }
+    // Also accept canplaythrough for fully-buffered desktop case
+    video.addEventListener('canplaythrough', onReady, { once: true });
+
+    kickBuffer();
 
     const scrub = () => {
       if (!video.duration) return;
@@ -134,6 +144,7 @@ export function Hero() {
       window.removeEventListener('touchcancel',onTouchEnd);
       cancelAnimationFrame(rafRef.current);
       cancelAnimationFrame(touchLoop);
+      video.removeEventListener('loadedmetadata', onReady);
       video.removeEventListener('canplaythrough', onReady);
     };
   }, []);
@@ -150,6 +161,7 @@ export function Hero() {
           muted
           playsInline
           preload="auto"
+          x-webkit-airplay="deny"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
