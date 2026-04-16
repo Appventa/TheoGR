@@ -53,12 +53,7 @@ export const galleryData: GalleryCategory[] = [
       { id: 'mv-05', title: '', thumbnail: '', youtubeId: 'Bpw6IgQciwU' },
     ],
   },
-  {
-    id:    'b2b',
-    label: 'B2B',
-    items: [],
-  },
-  {
+{
     id:    'creative',
     label: 'Creative',
     items: [
