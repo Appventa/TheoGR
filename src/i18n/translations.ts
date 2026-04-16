@@ -11,6 +11,7 @@ export const translations = {
       tagline:    'Δημιουργώ εικόνες που μένουν.',
       cta:        'Δες τη Δουλειά',
       typewriter: '25 χρόνια δημιουργίας βίντεο, σχεδιασμού και στρατηγικής brand. Από την ιδέα έως την υλοποίηση, παρέχω λύσεις που κάνουν το brand σας να ξεχωρίζει.',
+      bts:        'Στα Παρασκήνια',
     },
     gallery: {
       sectionLabel: 'Επιλεγμένες Εργασίες',
@@ -75,6 +76,7 @@ export const translations = {
       tagline:    'Crafting images that stay with you.',
       cta:        'View Work',
       typewriter: '25 years crafting video, design, and brand strategy. From concept to execution, I deliver solutions that make your brand stand out.',
+      bts:        'Behind the Scenes',
     },
     gallery: {
       sectionLabel: 'Selected Work',

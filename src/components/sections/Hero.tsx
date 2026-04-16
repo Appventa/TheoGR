@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 
+const BTS_YOUTUBE_ID = 'TbPtAg4Ihxw';
+
 const TYPING_SPEED  = 80;
 const HOLD_DURATION = 5000;
 const FADE_DURATION = 1000;
@@ -17,6 +19,7 @@ export function Hero() {
   const [phase, setPhase]       = useState<Phase>('waiting');
   const [visible, setVisible]   = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const [btsOpen, setBtsOpen]   = useState(false);
 
   const indexRef     = useRef(0);
   const prevText     = useRef(fullText);
@@ -194,9 +197,64 @@ export function Hero() {
           </AnimatePresence>
         </div>
 
+        {/* BTS button — lower third */}
+        <div className="absolute bottom-20 left-0 right-0 flex justify-center z-10">
+          <button
+            onClick={() => setBtsOpen(true)}
+            className="flex items-center gap-3 px-5 py-3 rounded-full border border-white/30 bg-background/40 backdrop-blur-sm text-white hover:border-primary hover:text-primary transition-colors duration-200"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5,3 19,12 5,21" />
+            </svg>
+            <span className="font-body text-label-md tracking-wide">{t.hero.bts}</span>
+          </button>
+        </div>
+
         {/* Bottom fade into gallery */}
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
       </div>
+
+      {/* BTS lightbox */}
+      <AnimatePresence>
+        {btsOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-50 bg-background/90 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setBtsOpen(false)}
+            />
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="relative w-full max-w-4xl" onClick={e => e.stopPropagation()}>
+                <button
+                  onClick={() => setBtsOpen(false)}
+                  className="absolute -top-10 right-0 text-on-surface-variant hover:text-on-surface transition-colors"
+                  aria-label="Close"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+                <div className="relative w-full rounded-md overflow-hidden bg-black" style={{ paddingTop: '56.25%' }}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${BTS_YOUTUBE_ID}?autoplay=1&rel=0`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
