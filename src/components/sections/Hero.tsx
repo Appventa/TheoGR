@@ -244,7 +244,7 @@ export function Hero() {
                 </button>
                 <div className="relative w-full rounded-md overflow-hidden bg-black" style={{ paddingTop: '56.25%' }}>
                   <iframe
-                    src={`https://www.youtube.com/embed/${BTS_YOUTUBE_ID}?autoplay=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${BTS_YOUTUBE_ID}?autoplay=1&rel=0&start=30`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="absolute inset-0 w-full h-full"
