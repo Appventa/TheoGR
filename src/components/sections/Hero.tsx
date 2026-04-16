@@ -188,8 +188,8 @@ export function Hero() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: FADE_DURATION / 1000, ease: 'easeInOut' }}
-                className="text-left text-white w-full max-w-3xl leading-snug"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: '2.25rem', fontWeight: 300 }}
+                className="text-left text-white w-full max-w-3xl leading-snug text-xl md:text-[2.25rem]"
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300 }}
               >
                 {displayedText}
               </motion.p>
