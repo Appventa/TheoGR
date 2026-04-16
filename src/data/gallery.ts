@@ -11,6 +11,10 @@ export const galleryData: GalleryCategory[] = [
       { id: 'tc-04', title: '', thumbnail: '/thumbs/TVC_4.jpg', videoUrl: '/videos/TVC_4.mp4' },
       { id: 'tc-05', title: '', thumbnail: '/thumbs/TVC_5.jpg', videoUrl: '/videos/TVC_5.mp4' },
       { id: 'tc-06', title: '', thumbnail: '/thumbs/TVC_6.jpg', videoUrl: '/videos/TVC_6.mp4' },
+      { id: 'tc-07', title: '', thumbnail: '', youtubeId: 'wcjxBxXQvQk' },
+      { id: 'tc-08', title: '', thumbnail: '', youtubeId: 'jUE0QPSm-wM' },
+      { id: 'tc-09', title: '', thumbnail: '', youtubeId: 'vMLg1XoO5P4' },
+      { id: 'tc-10', title: '', thumbnail: '', youtubeId: 'TLr3qNplkuE' },
     ],
   },
   {
