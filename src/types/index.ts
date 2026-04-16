@@ -1,10 +1,11 @@
 export interface VideoItem {
-  id:        string;
-  title:     string;
-  thumbnail: string;
-  videoUrl?: string;
-  duration?: string;
-  tags?:     string[];
+  id:          string;
+  title:       string;
+  thumbnail:   string;
+  videoUrl?:   string;
+  youtubeId?:  string;
+  duration?:   string;
+  tags?:       string[];
 }
 
 export interface GalleryCategory {

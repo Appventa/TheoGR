@@ -11,16 +11,22 @@ interface VideoCardProps {
 export function VideoCard({ item, portrait }: VideoCardProps) {
   const [open, setOpen] = useState(false);
 
+  const isYoutube  = !!item.youtubeId;
+  const isPlayable = isYoutube || !!item.videoUrl;
+  const thumbnail  = item.thumbnail || (isYoutube
+    ? `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`
+    : '');
+
   return (
     <>
       <motion.div
-        className={`relative flex-shrink-0 rounded-md overflow-hidden bg-surface-highest cursor-pointer ${portrait ? 'w-[180px] h-[320px]' : 'w-[320px] h-[200px]'}`}
+        className={`relative flex-shrink-0 rounded-md overflow-hidden bg-surface-highest ${isPlayable ? 'cursor-pointer' : ''} ${portrait ? 'w-[180px] h-[320px]' : 'w-[320px] h-[200px]'}`}
         whileHover={{ scale: 1.04 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
-        onClick={() => item.videoUrl && setOpen(true)}
+        onClick={() => isPlayable && setOpen(true)}
       >
         <img
-          src={item.thumbnail}
+          src={thumbnail}
           alt={item.title}
           draggable={false}
           className="w-full h-full object-cover"
@@ -41,9 +47,9 @@ export function VideoCard({ item, portrait }: VideoCardProps) {
         </motion.div>
       </motion.div>
 
-      {/* Video lightbox */}
+      {/* Lightbox */}
       <AnimatePresence>
-        {open && item.videoUrl && (
+        {open && isPlayable && (
           <>
             <motion.div
               className="fixed inset-0 z-50 bg-background/90 backdrop-blur-sm"
@@ -69,14 +75,26 @@ export function VideoCard({ item, portrait }: VideoCardProps) {
                     <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 </button>
-                <video
-                  src={item.videoUrl}
-                  controls
-                  autoPlay
-                  playsInline
-                  className="w-full rounded-md bg-black"
-                  style={{ maxHeight: '80dvh' }}
-                />
+
+                {isYoutube ? (
+                  <div className="relative w-full rounded-md overflow-hidden bg-black" style={{ paddingTop: '56.25%' }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${item.youtubeId}?autoplay=1&rel=0`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  </div>
+                ) : (
+                  <video
+                    src={item.videoUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full rounded-md bg-black"
+                    style={{ maxHeight: '80dvh' }}
+                  />
+                )}
               </div>
             </motion.div>
           </>

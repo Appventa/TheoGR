@@ -30,7 +30,7 @@ export function Gallery() {
 
         {/* Gallery Rows */}
         <div className="flex flex-col gap-10">
-          {galleryData.map(category => (
+          {galleryData.filter(c => c.items.length > 0).map(category => (
             <motion.div key={category.id} variants={fadeScaleIn}>
               <GalleryRow category={category} />
             </motion.div>

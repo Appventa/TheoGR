@@ -39,6 +39,22 @@ export const galleryData: GalleryCategory[] = [
     ],
   },
   {
+    id:    'music-videos',
+    label: 'Music Videos',
+    items: [
+      { id: 'mv-01', title: '', thumbnail: '', youtubeId: 'ZtiyC5w1Rrg' },
+      { id: 'mv-02', title: '', thumbnail: '', youtubeId: 'Z9mdKjwC-pc' },
+      { id: 'mv-03', title: '', thumbnail: '', youtubeId: 'QFjsWC5cUJc' },
+      { id: 'mv-04', title: '', thumbnail: '', youtubeId: 'u9nYJAPPRSE' },
+      { id: 'mv-05', title: '', thumbnail: '', youtubeId: 'Bpw6IgQciwU' },
+    ],
+  },
+  {
+    id:    'b2b',
+    label: 'B2B',
+    items: [],
+  },
+  {
     id:    'creative',
     label: 'Creative',
     items: [

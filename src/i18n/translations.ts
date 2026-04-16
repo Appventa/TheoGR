@@ -21,6 +21,7 @@ export const translations = {
       'music-videos':   'Μουσικά Βίντεο',
       'product-videos': 'Βίντεο Προϊόντων',
       'ugc-social':     'UGC & Social Media',
+      'b2b':            'B2B Βίντεο',
       'creative':       'Δημιουργικό',
     } as Record<string, string>,
     cta: {
@@ -84,6 +85,7 @@ export const translations = {
       'music-videos':   'Music Videos',
       'product-videos': 'Product Videos',
       'ugc-social':     'UGC & Social',
+      'b2b':            'B2B Videos',
       'creative':       'Creative',
     } as Record<string, string>,
     cta: {
