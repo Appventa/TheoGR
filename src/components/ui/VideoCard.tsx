@@ -14,7 +14,7 @@ export function VideoCard({ item, portrait }: VideoCardProps) {
   const isYoutube  = !!item.youtubeId;
   const isPlayable = isYoutube || !!item.videoUrl;
   const thumbnail  = item.thumbnail || (isYoutube
-    ? `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`
+    ? `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`
     : '');
 
   return (
